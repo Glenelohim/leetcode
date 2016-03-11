@@ -41,3 +41,133 @@ public:
 
     }
 };
+
+
+//something wrong...
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int size1 = nums1.size(), size2 = nums2.size();
+        if (!size1 && !size2)
+        {
+        	return 0;
+        }
+        int i = 0, j = 0, mid1 = (size1 + size2) / 2, mid2 = 0, count = 0;
+        if ((size1 + size2) % 2)
+        {
+        	mid2 = mid1 - 1;
+        }
+        int r1 = 0, r2 = 0;
+        while (i < size1 && j < size2)
+        {
+        	if (nums1[i] < nums2[j])
+        	{
+        		count++;
+        		if (0 == mid2) //odd
+        		{
+        			if (count == mid1 + 1)
+        			{
+        				r1 = nums1[i];
+        				return r1;
+        			}
+        		}
+        		else  //even
+        		{
+        			if (count == mid2 + 1)
+        			{
+        				r2 = nums1[i];
+        			}
+        			else if (count == mid1 + 1)
+        			{
+        				r1 = nums1[i];
+        				return ((double)(r1 + r2)) / 2;
+        			}
+        		}
+        		i++;
+        	}
+        	else
+        	{
+        		count++;
+        		if (0 == mid2)
+        		{
+        			if (count == mid1 + 1)
+        			{
+        				r1 = nums2[j];
+        				return r1;
+        			}
+        		}
+        		else
+        		{
+        			if (count == mid2 + 1)
+        			{
+        				r2 = nums2[j];
+        			}
+        			else if (count == mid1 + 1)
+        			{
+        				r1 = nums2[j];
+        				return ((double)(r1 + r2)) / 2;
+        			}
+        		}
+        		j++;
+        	}
+        }
+        if (i == size1)
+        {
+        	while (j < size2)
+        	{
+        		count++;
+        		if (0 == mid2)
+        		{
+        			if (count == mid1 + 1)
+        			{
+        				r1 = nums2[j];
+        				break;
+        			}
+        		}
+        		else
+        		{
+        			if (count == mid2 + 1)
+        			{
+        				r2 = nums2[j];
+        			}
+        			else if (count == mid1 + 1)
+        			{
+        				r1 = nums2[j];
+        				break;
+        			}
+        		}
+        		j++;
+        	}
+        	return ((double)(r1 + r2)) / 2;
+        }
+        else if (j == size2)
+        {
+        	while (i < size1)
+        	{
+        		count++;
+        		if (0 == mid2) //odd
+        		{
+        			if (count == mid1 + 1)
+        			{
+        				r1 = nums1[i];
+        				break;
+        			}
+        		}
+        		else  //even
+        		{
+        			if (count == mid2 + 1)
+        			{
+        				r2 = nums1[i];
+        			}
+        			else if (count == mid1 + 1)
+        			{
+        				r1 = nums1[i];
+        				break;
+        			}
+        		}
+        		i++;
+        	}
+        	return ((double)(r1 + r2)) / 2;
+        }
+    }
+};
